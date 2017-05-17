@@ -1,0 +1,8 @@
+# Network (NCA-4010 upper right-most port)
+d-i	netcfg/choose_interface select ens2f0
+
+# Destination Disk
+#d-i	partman-auto/disk string /dev/sda
+
+# Load shared Lanner-related options from 'lanner-base.seed'.
+d-i	preseed/include string lanner-base.seed
