@@ -1,4 +1,4 @@
-# Network (NCA-4010 upper right-most port)
+# Network (NCA-4010 upper-right-most port)
 d-i	netcfg/choose_interface select ens2f0
 
 # Destination Disk

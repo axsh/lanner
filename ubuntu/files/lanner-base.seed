@@ -15,6 +15,7 @@ d-i	partman/confirm boolean true
 d-i	partman/confirm_nooverwrite boolean true
 
 tasksel	tasksel/force-tasks string server
+tasksel	tasksel/first multiselect standard
 
 d-i	pkgsel/language-pack-patterns string
 d-i	pkgsel/install-language-support boolean false
@@ -37,3 +38,5 @@ d-i	preseed/early_command string \
 d-i	preseed/late_command string \
         sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="console=tty0 console=ttyS0"/g; s/TIMEOUT=0/TIMEOUT=1/g; s/# *GRUB_TERMINAL=console/GRUB_TERMINAL=console/g' /target/etc/default/grub; \
         in-target update-grub;
+
+d-i	finish-install/reboot_in_progress note
