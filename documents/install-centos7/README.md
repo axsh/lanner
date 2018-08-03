@@ -1,4 +1,4 @@
-# WindowsクライアントからlannerへCentOS7のインストール手順
+# シリアルターミナルからCentOS7のインストール手順
 
 ## 事前準備
 
@@ -16,7 +16,7 @@ USBポートにCOMケーブルを指す
 
 <img src="./images/1.teraterm/2-setting-serial-port.png" width="30%">
 
-  + ポートレート: 115200
+  + ボー・レート: 115200
   + データ: 8bit
   + パリティ: none
   + ストップ: 1bit
