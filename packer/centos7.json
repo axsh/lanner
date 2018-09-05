@@ -1,0 +1,76 @@
+{
+  "variables": {
+    "memory": "4096",
+    "host_name": "nca4010",
+    "host_switch": "{{ env `HOST_SWITCH` }}",
+    "github_user": "{{ env `GITHUB_USER` }}",
+    "github_token": "{{ env `GITHUB_TOKEN` }}"
+  },
+  "builders": [
+    {
+      "vm_name": "nca4010",
+
+      "type": "qemu",
+      "format": "qcow2",
+
+      "disk_image": true,
+      "iso_url": "boxtemp/7/box.img",
+      "iso_checksum_type": "none",
+      "output_directory": "output-qemu",
+
+      "http_directory": "http",
+      "headless": true,
+
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_private_key_file": "boxtemp/7/vagrant.key",
+
+      "ssh_wait_timeout": "10m",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "qemuargs": [
+        [ "-m", "{{ user `memory` }}" ],
+        [ "-netdev", "user,id=net0,hostfwd=tcp::{{ .SSHHostPort }}-:22,net=10.0.2.0/24" ],
+        [ "-device", "virtio-net,netdev=net0" ],
+        [ "-netdev"]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "fastestmirror.conf",
+      "destination": "/tmp/fastestmirror.conf"
+    },
+    {
+      "type": "shell",
+      "execute_command": "chmod +x {{ .Path }}; echo 'vagrant' | {{ .Vars }} sudo -S -E sh -eux '{{ .Path }}'",
+      "inline": [
+        "cp /tmp/fastestmirror.conf /etc/yum/pluginconf.d/fastestmirror.conf",
+        "sed -i -e 's!^PasswordAuthentication no!PasswordAuthentication yes!' /etc/ssh/sshd_config",
+        "nmcli connection modify 'System eth0' connection.interface-name eth0 connection.id eth0",
+        "systemctl restart NetworkManager",
+        "nmcli connection modify eth0 ipv4.dns 8.8.8.8",
+        "nmcli connection modify eth0 ipv4.ignore-auto-dns yes",
+        "nmcli connection add type bridge autoconnect yes con-name virbr0 ifname virbr0",
+        "nmcli connection modify virbr0 bridge.stp no",
+        "echo '{{ user `nic2_ipv4` }} {{ user `host_name` }}' >> /etc/hosts",
+        "echo '{{ user `host_name` }}' > /etc/hostname",
+        "yum clean all"
+      ]
+    },
+    {
+      "destination": "/var/tmp/",
+      "source": "packer_cache/tree.tar",
+      "type": "file"
+    },
+    {
+      "type": "shell",
+      "execute_command": "chmod +x {{ .Path }}; echo 'vagrant' | {{ .Vars }} sudo -S -E sh -eux '{{ .Path }}'",
+      "inline": [
+        "cd /var/tmp/",
+        "tar xf tree.tar",
+        "cd lanner"
+      ]
+    }
+  ]
+}
