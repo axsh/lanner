@@ -31,7 +31,22 @@
         [ "-m", "{{ user `memory` }}" ],
         [ "-netdev", "user,id=net0,hostfwd=tcp::{{ .SSHHostPort }}-:22,net=10.0.2.0/24" ],
         [ "-device", "virtio-net,netdev=net0" ],
-        [ "-netdev"]
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=10.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=11.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=12.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=13.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=14.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=15.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=16.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=17.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=18.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=19.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=1a.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=1b.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=1c.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=1d.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=1e.0" ],
+        [ "-device", "virtio-net-pci,bus=pci.0,addr=1f.0" ]
       ]
     }
   ],
