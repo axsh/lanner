@@ -66,8 +66,6 @@
         "systemctl restart NetworkManager",
         "nmcli connection modify eth0 ipv4.dns 8.8.8.8",
         "nmcli connection modify eth0 ipv4.ignore-auto-dns yes",
-        "nmcli connection add type bridge autoconnect yes con-name virbr0 ifname virbr0",
-        "nmcli connection modify virbr0 bridge.stp no",
         "sudo hostnamectl set-hostname '{{ user `host_name` }}'",
         "yum -y install pciutils",
         "yum clean all"
