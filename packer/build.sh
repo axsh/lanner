@@ -29,7 +29,7 @@ mkdir -p $box_tmp  || :
 mkdir -p packer_cache
 (
   cd $(git rev-parse --show-toplevel)
-  git archive --format=tar --prefix=lanner/ --output=TM200/packer_cache/tree.tar HEAD
+  git archive --format=tar --prefix=lanner/ --output=packer/packer_cache/tree.tar HEAD
 )
 
 packer build -force centos7.json
