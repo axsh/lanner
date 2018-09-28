@@ -68,8 +68,7 @@
         "nmcli connection modify eth0 ipv4.ignore-auto-dns yes",
         "nmcli connection add type bridge autoconnect yes con-name virbr0 ifname virbr0",
         "nmcli connection modify virbr0 bridge.stp no",
-        "echo '{{ user `nic2_ipv4` }} {{ user `host_name` }}' >> /etc/hosts",
-        "echo '{{ user `host_name` }}' > /etc/hostname",
+        "sudo hostnamectl set-hostname '{{ user `host_name` }}'",
         "yum -y install pciutils",
         "yum clean all"
       ]
