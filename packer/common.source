@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function kill-vm() {
+	if [ -f "${vm_name}.pid" ]; then
+		sudo kill $(sudo cat ${ROOTDIR}/${vm_name}.pid)
+		sudo rm ${ROOTDIR}/${vm_name}.pid
+	fi
+}
+
+function destroy-vm() {
+	kill-vm
+	[ -f "${ROOTDIR}/kvm.stderr" ] && sudo rm ${ROOTDIR}/kvm.stderr
+	[ -f "${ROOTDIR}/kvm.stdout" ] && sudo rm ${ROOTDIR}/kvm.stdout
+	[ -f "${ROOTDIR}/output-qemu/${vm_name}" ] && sudo rm ${ROOTDIR}/output-qemu/${vm_name}
+}
+
