@@ -70,6 +70,7 @@
         "nmcli connection modify virbr0 bridge.stp no",
         "echo '{{ user `nic2_ipv4` }} {{ user `host_name` }}' >> /etc/hosts",
         "echo '{{ user `host_name` }}' > /etc/hostname",
+        "yum -y install pciutils",
         "yum clean all"
       ]
     },
