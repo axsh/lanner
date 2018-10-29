@@ -32,7 +32,11 @@ kvmcmdline=(
     echo -device pci-bridge,id=pbr1,bus=pci.0,chassis_nr=1
     for (( i=0 ; i < ${#nics[@]} ; i++ )); do
         nic=(${nics[$i]})
-        echo -netdev tap,ifname=${nic[0]#*=},script=,downscript=,id=${nic[0]#*=}
+        if [ "$i" = "0" ]; then
+            echo -netdev user,id=${nic[0]#*=},hostfwd=tcp::${forward_port}-:22,net=10.0.2.0/24
+        else
+            echo -netdev tap,ifname=${nic[0]#*=},script=,downscript=,id=${nic[0]#*=}
+        fi
         echo -device virtio-net-pci,netdev=${nic[0]#*=},mac=${nic[1]#*=},multifunction=on,bus=pbr1,addr=${nic[2]#*=}.${nic[3]#*=}
     done
   )

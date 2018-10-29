@@ -48,7 +48,8 @@
         [ "-device", "virtio-net-pci,mac=52:56:01:00:01:0e,multifunction=on,bus=pbr0,addr=2.6" ],
         [ "-device", "virtio-net-pci,mac=52:56:01:00:01:0f,multifunction=on,bus=pbr0,addr=2.7" ],
         [ "-device", "virtio-net-pci,mac=52:56:01:00:01:10,multifunction=on,bus=pbr0,addr=3.0" ],
-        [ "-device", "virtio-net-pci,mac=52:56:01:00:01:11,multifunction=on,bus=pbr0,addr=3.1" ]
+        [ "-device", "virtio-net-pci,mac=52:56:01:00:01:11,multifunction=on,bus=pbr0,addr=3.1" ],
+        [ "-device", "virtio-net-pci,mac=52:56:01:00:01:12,multifunction=on,bus=pbr0,addr=3.2" ]
       ]
     }
   ],
@@ -64,7 +65,7 @@
       "inline": [
         "cp /tmp/fastestmirror.conf /etc/yum/pluginconf.d/fastestmirror.conf",
         "sed -i -e 's!^PasswordAuthentication no!PasswordAuthentication yes!' /etc/ssh/sshd_config",
-        "nmcli connection modify 'System eth0' connection.interface-name if0 connection.id if0",
+        "nmcli connection modify 'System eth0' connection.interface-name eth0 connection.id eth0",
         "nmcli connection modify 'Wired connection 1' connection.interface-name if1 connection.id if1",
         "nmcli connection modify 'Wired connection 2' connection.interface-name if2 connection.id if2",
         "nmcli connection modify 'Wired connection 3' connection.interface-name if3 connection.id if3",
@@ -82,9 +83,10 @@
         "nmcli connection modify 'Wired connection 15' connection.interface-name if15 connection.id if15",
         "nmcli connection modify 'Wired connection 16' connection.interface-name if16 connection.id if16",
         "nmcli connection modify 'Wired connection 17' connection.interface-name if17 connection.id if17",
+        "nmcli connection modify 'Wired connection 18' connection.interface-name if18 connection.id if18",
         "systemctl restart NetworkManager",
-        "nmcli connection modify if0 ipv4.dns 8.8.8.8",
-        "nmcli connection modify if0 ipv4.ignore-auto-dns yes",
+        "nmcli connection modify eth0 ipv4.dns 8.8.8.8",
+        "nmcli connection modify eth0 ipv4.ignore-auto-dns yes",
         "sudo hostnamectl set-hostname '{{ user `host_name` }}'",
         "yum -y install pciutils",
         "yum clean all"
